@@ -8,8 +8,9 @@ function validarEmail(email) {
   }
   
   function validarCampoNoVacio(valor) {
-    return valor && valor.trim().length > 0;
+    return typeof valor === 'string' && valor.trim().length > 0;
   }
+  
   
   module.exports = { validarEmail, validarPassword, validarCampoNoVacio };
   
