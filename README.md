@@ -71,9 +71,8 @@ Silveyra Tomás, Waniukiewicz Nicolás, Stupniki Hernán, Andrusyszyn Emiliano, 
 
 **Profesor responsable:**
 Kutz Rene Gabriel
-Ingeniería de Software
 ---
-
+Ingeniería de Software
 ## 📄 Licencia
 
 MIT – Usar, compartir y modificar libremente con atribución.
