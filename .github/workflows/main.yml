@@ -1,31 +1,31 @@
-name: CI - Start de la App
+name: Node.js CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clonar el repositorio
-        uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
-      - name: Instalar Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
 
-      - name: Instalar dependencias
-        run: npm install
+    - name: Install dependencies
+      run: npm install
 
-      - name: Iniciar la app
-        run: npm test
+    - name: Run tests with coverage
+      run: npm test
 
-      - name: Ejecutar tests con cobertura
-        run: npx jest --coverage
+    - name: Upload coverage report
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-report
+        path: coverage/
