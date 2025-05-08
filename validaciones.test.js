@@ -1,30 +1,27 @@
-const fs = require('fs');
+const { validarEmail, validarPassword, validarCampoNoVacio } = require('./validaciones');
 
-function validarEmail(email) {
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return regex.test(email);
-}
+describe('Validaciones de campos', () => {
+  test('Email válido', () => {
+    expect(validarEmail('test@gmail.com')).toBe(true);
+  });
 
-function validarPassword(pass) {
-  return typeof pass === 'string' && pass.length >= 8;
-}
+  test('Email inválido', () => {
+    expect(validarEmail('test@')).toBe(false);
+  });
 
-function validarCampoNoVacio(valor) {
-  return valor && valor.trim().length > 0;
-}
+  test('Password válida', () => {
+    expect(validarPassword('miClave123')).toBe(true);
+  });
 
-function validarDatosUsuario(datos) {
-  console.log("\n🔎 Validando datos del usuario cargados en datos_usuario.json:\n");
+  test('Password corta', () => {
+    expect(validarPassword('1234')).toBe(false);
+  });
 
-  console.log("Nombre:", validarCampoNoVacio(datos.nombre) ? '✅ Válido' : '❌ Vacío');
-  console.log("Email:", validarEmail(datos.email) ? '✅ Válido' : '❌ Inválido');
-  console.log("Teléfono:", validarCampoNoVacio(datos.telefono) ? '✅ Válido' : '❌ Vacío');
-  console.log("Contraseña:", validarPassword(datos.password) ? '✅ Válida' : '❌ Corta o inválida');
-}
+  test('Campo no vacío', () => {
+    expect(validarCampoNoVacio('Hola')).toBe(true);
+  });
 
-try {
-  const datos = JSON.parse(fs.readFileSync('datos_usuario.json', 'utf-8'));
-  validarDatosUsuario(datos);
-} catch (err) {
-  console.error("❌ No se pudo leer datos_usuario.json:", err.message);
-}
+  test('Campo vacío', () => {
+    expect(validarCampoNoVacio('')).toBe(false);
+  });
+});
