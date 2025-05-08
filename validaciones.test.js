@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 function validarEmail(email) {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return regex.test(email);
@@ -11,14 +13,18 @@ function validarCampoNoVacio(valor) {
   return valor && valor.trim().length > 0;
 }
 
-function ejecutarTests() {
-  console.log('✔️ Email válido:', validarEmail('test@gmail.com') === true);
-  console.log('❌ Email inválido:', validarEmail('test@') === false);
-  console.log('✔️ Password válida:', validarPassword('miClave123') === true);
-  console.log('❌ Password corta:', validarPassword('1234') === false);
-  console.log('✔️ Campo no vacío:', validarCampoNoVacio('Hola') === true);
-  console.log('❌ Campo vacío:', validarCampoNoVacio('') === false);
+function validarDatosUsuario(datos) {
+  console.log("\n🔎 Validando datos del usuario cargados en datos_usuario.json:\n");
+
+  console.log("Nombre:", validarCampoNoVacio(datos.nombre) ? '✅ Válido' : '❌ Vacío');
+  console.log("Email:", validarEmail(datos.email) ? '✅ Válido' : '❌ Inválido');
+  console.log("Teléfono:", validarCampoNoVacio(datos.telefono) ? '✅ Válido' : '❌ Vacío');
+  console.log("Contraseña:", validarPassword(datos.password) ? '✅ Válida' : '❌ Corta o inválida');
 }
 
-ejecutarTests();
-module.exports = { validarEmail, validarPassword, validarCampoNoVacio };
+try {
+  const datos = JSON.parse(fs.readFileSync('datos_usuario.json', 'utf-8'));
+  validarDatosUsuario(datos);
+} catch (err) {
+  console.error("❌ No se pudo leer datos_usuario.json:", err.message);
+}
