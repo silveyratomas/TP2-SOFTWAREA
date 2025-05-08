@@ -76,5 +76,3 @@ Ingeniería de Software
 ## 📄 Licencia
 
 MIT – Usar, compartir y modificar libremente con atribución.
-
-```
